@@ -1,7 +1,9 @@
 const clientId = '';
-let accessToken = '';
+let accessToken;
 
-class Spotify extends React.Component {
+const Spotify = {
+  const URLAccessToken =
+  const 
 
   getAccessToken (){
     $.ajax({
@@ -11,8 +13,6 @@ class Spotify extends React.Component {
       success(response) {},
       error(jqXHR, status, errorThrown) {}
     });
-
-
   }
 }
 export default Spotify;
