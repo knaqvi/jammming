@@ -14,19 +14,55 @@ class App extends React.Component {
         artist: 'The Beatles',
         album: 'The Beatles'
       }],
+      playlistName: 'Kashif Mixtape',
+      playlistTracks: [
+        name,
+        artist,
+        album
+      ]
     };
-  this.SearchResults = this.searchResults.bind(this);
+    this.addTrack = this.addTrack.bind(this);
+    this.removeTrack = this.removeTrack.bind(this);
+    this.updatePlaylistName = this.updatePlaylistName.bind(this);
+    this.savePlaylist = this.savePlaylist.bind(this);
+    this.search = this.search.bind(this);
   }
 
-  render {
+  addTrack(track){
+    // if track (id) is not in playlistTracks add track show + and add when clicked
+    if (!this.state.playlistTracks.find(playlistTrack => playlistTrack.id === track.id)) {
+      this.setState({ playlistTracks: track });
+    }
+  }
+
+  removeTrack(track) {
+    this.setState({
+      playlistTracks: this.state.playlistTracks.filter(
+        playlistTrack => playlistTrack.id !== track.id)
+    });
+  }
+
+  updatePlaylistName(name) {
+    this.setState({ playlistName: name});
+  }
+
+  savePlaylist() {
+    const trackURIs = this.state.playlistTracks.map(playlistTrack => playlistTrack.uri);
+  }
+  render() {
     return (
     <div>
       <h1>Ja<span className="highlight">mmm</span>ing</h1>
       <div className="App">
         <!-- Add a SearchBar component -->
         <div className="App-playlist">
-          <!-- Add a SearchResults component -->
-          <!-- Add a Playlist component -->
+          <SearchResults searchResults={this.state.searchResults}
+            onAdd={this.state.addTrack} /> // Step 32
+          <Playlist
+            name={this.state.playlistName}
+            tracks={this.state.playlistTracks}
+            onRemove={this.state.removeTrack}
+            onNameChange={this.state.updatePlaylistName} />
         </div>
       </div>
     </div>
