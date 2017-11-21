@@ -27,7 +27,7 @@ class Track extends React.Component {
       }
       else
       {
-        return (<a className='Track-action' onClick={this.addTrack}>+</a>):
+        return (<a className='Track-action' onClick={this.addTrack}>+</a>);
       }
 
   }

@@ -1,9 +1,9 @@
 import React from 'react';
 import './App.css';
-import SearchBar from '../Components/SearchBar/SearchBar.js';
-import SearchResults from '../Components/SearchResults/SearchResults.js';
-import Playlist from '../Components/Playlist/Playlist.js';
-
+import SearchBar from '../SearchBar/SearchBar.js';
+import SearchResults from '../SearchResults/SearchResults.js';
+import Playlist from '../Playlist/Playlist.js';
+import Spotify from '../../util/Spotify.js';
 
 class App extends React.Component {
   constructor(props){
@@ -15,11 +15,7 @@ class App extends React.Component {
         album: 'The Beatles'
       }],
       playlistName: 'Kashif Mixtape',
-      playlistTracks: [
-        name,
-        artist,
-        album
-      ]
+      playlistTracks: []
     };
     this.addTrack = this.addTrack.bind(this);
     this.removeTrack = this.removeTrack.bind(this);
@@ -48,13 +44,27 @@ class App extends React.Component {
 
   savePlaylist() {
     const trackURIs = this.state.playlistTracks.map(playlistTrack => playlistTrack.uri);
+    Spotify.savePlaylist(this.state.playlistName, trackURIs).then(() => {
+      this.setState({
+        playlistName: 'New Playlist',
+        searchResults: []
+      });
+    });
   }
+
+  search(searchTerm) {
+    Spotify.search(searchTerm).then(
+      searchResults => {
+        this.setState({searchResults: searchResults})
+      }
+    )
+  }
+
   render() {
     return (
     <div>
       <h1>Ja<span className="highlight">mmm</span>ing</h1>
       <div className="App">
-        <!-- Add a SearchBar component -->
         <div className="App-playlist">
           <SearchResults searchResults={this.state.searchResults}
             onAdd={this.state.addTrack} /> // Step 32
