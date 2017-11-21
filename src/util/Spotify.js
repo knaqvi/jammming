@@ -3,7 +3,7 @@ const REDIRECT_URI  = 'http://localhost:3000/';
 let accessToken;
 
 const Spotify = {
-  getAccessToken() {
+  getAccessToken() { // Step 78
     const retrieveAccessToken = window.location.href.match(/access_token=([^&]*)/);
     const retrieveExpirationTime = window.location.href.match(/expires_in=([^&]*)/);
 
@@ -27,7 +27,7 @@ const Spotify = {
       {
         headers:
         {
-        Authorization: 'Bearer ${accessToken}'
+        Authorization: `Bearer ${accessToken}`
         }
       }).then(
         response => response.json()

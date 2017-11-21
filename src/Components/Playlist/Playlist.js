@@ -5,10 +5,10 @@ import './Playlist.css';
 class Playlist extends React.Component {
   constructor(props){
     super(props);
-    this.onNameChange = this.onNameChange.bind(this);
+    this.onNameChange = this.onNameChange.bind(this); // step 60
   }
   handleNameChange(event){
-    this.props.onNameChange(event.target.value);
+    this.props.onNameChange(event.target.value); // Step 59
   }
 
   search(term) {
@@ -18,11 +18,11 @@ class Playlist extends React.Component {
   render () {
     return (
       <div className="Playlist">
-        <input defaultValue={'New Playlist'} onChanage={this.handleNameChange} />
-        <TrackList tracks={this.props.playlistName}
-          onRemove={this.props.removeTrack} />
-        <a className="Playlist-save" >SAVE TO SPOTIFY
-           onClick={this.props.onSave}
+        <input defaultValue={'New Playlist'} onChange={this.handleNameChange} />
+        <TrackList tracks={this.props.playlistTracks} //Step 39
+          onRemove={this.props.removeTrack} /* Step 51 */ />
+        <a className="Playlist-save" onClick={this.props.onSave} /* Step 65 */ >
+          SAVE TO SPOTIFY
         </a>
       </div>
     );
