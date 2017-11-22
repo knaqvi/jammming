@@ -15,7 +15,7 @@ class App extends React.Component {
     };
     this.addTrack = this.addTrack.bind(this);
     this.removeTrack = this.removeTrack.bind(this); // Step 50
-    this.updatePlaylistName = this.updatePlaylistName.bind(this); // step 58
+    this.updatePlaylistName = this.updatePlaylistName.bind(this);
     this.savePlaylist = this.savePlaylist.bind(this); // step 64
     this.search = this.search.bind(this); //step 68
   }
@@ -64,12 +64,12 @@ class App extends React.Component {
         <SearchBar onSearch={this.search} />
         <div className="App-playlist">
           <SearchResults searchResults={this.state.searchResults}
-            onAdd={this.state.addTrack} /> // Step 32
+            onAdd={this.state.addTrack} />
           <Playlist
-            playlistName={this.state.playlistName} // step 38
-            playlistTracks={this.state.playlistTracks} // Step 38
-            onRemove={this.state.removeTrack} // Step 51
-            onNameChange={this.state.updatePlaylistName} /> //step 58
+            playlistName={this.state.playlistName}
+            playlistTracks={this.state.playlistTracks}
+            onRemove={this.state.removeTrack} 
+            onNameChange={this.state.updatePlaylistName} />
         </div>
       </div>
     </div>
