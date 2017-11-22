@@ -10,8 +10,8 @@ class App extends React.Component {
   super(props);
     this.state = {
       searchResults: [],
-      playlistName: 'Kashif Mixtape', //Step 37
-      playlistTracks: [] // Step 37
+      playlistName: '',
+      playlistTracks: []
     };
     this.addTrack = this.addTrack.bind(this);
     this.removeTrack = this.removeTrack.bind(this); // Step 50
@@ -22,29 +22,29 @@ class App extends React.Component {
 
   addTrack(track){
     // if track (id) is not in playlistTracks add track show + and add when clicked
-    if (!this.state.playlistTracks.find(playlistTrack => playlistTrack.id === track.id)) {
-      this.setState({ playlistTracks: track });
+    let tracks = this.state.playlistTracks;
+    if (!tracks.includes(track)) {
+      tracks.push(track);
+      this.setState({ playlistTracks: tracks });
     }
+  //  if (!this.state.playlistTracks.find(playlistTrack => playlistTrack.id === track.id)) {
+  //    this.setState({ playlistTracks: track });
   }
 
   removeTrack(track) {
-    this.setState({
-      playlistTracks: this.state.playlistTracks.filter(
-        playlistTrack => playlistTrack.id !== track.id)
-    });
+    let tracks = this.state.playlistTracks.filter(
+        playlistTrack => playlistTrack.id !== track.id);
+        this.setState({ playlistTracks: tracks })
   }
 
   updatePlaylistName(name) {
-    this.setState({ playlistName: name}); // step 56
+    this.setState({ playlistName: name});
   }
 
   savePlaylist() {
-    const trackURIs = this.state.playlistTracks.map(playlistTrack => playlistTrack.uri); // Step 63
-    Spotify.savePlaylist(this.state.playlistName, trackURIs).then(() => {
-      this.setState({
-        playlistName: 'New Playlist',
-        searchResults: []
-      });
+    let trackURIs = this.state.playlistTracks.map(track => track.uri);
+    Spotify.savePlaylist(this.state.playlistName, trackURIs).then(searchResults => {
+      this.setState({ playlistName: 'New Playlist', searchResults: [] });
     });
   }
 
@@ -64,12 +64,14 @@ class App extends React.Component {
         <SearchBar onSearch={this.search} />
         <div className="App-playlist">
           <SearchResults searchResults={this.state.searchResults}
-            onAdd={this.state.addTrack} />
+            onAdd={this.addTrack} />
           <Playlist
             playlistName={this.state.playlistName}
             playlistTracks={this.state.playlistTracks}
-            onRemove={this.state.removeTrack} 
-            onNameChange={this.state.updatePlaylistName} />
+            onRemove={this.removeTrack}
+            onNameChange={this.updatePlaylistName}
+            onSave={this.savePlaylist}
+             />
         </div>
       </div>
     </div>
